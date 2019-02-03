@@ -1,0 +1,70 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 12px;
+}
+
+.M_Log div {
+  padding: 5px;
+  padding-bottom: 2px;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+#ev_body {
+  margin-top: -10px;
+}
+
+.SUF {
+  color: #F;
+}
+.F_B {
+  color: #ffb400;
+}
+.NYYC {
+  color: #f00;
+}
+.UC {
+  color: #ff0;
+}
+.STP {
+  color: #0c0;
+}
+.APPL {
+  color: #FE;
+}
+.UNIT_0 {
+  color: #0c0;
+  text-decoration: blink;
+  /* font-size: 30px; */
+}
+.UNIT_5 {
+  color: #ff0;
+  /* font-size: 30px; */
+}
+.UNIT_15 {
+  color: #f00;
+  /* font-size: 30px; */
+}
+.UNIT_CANCEL {
+  text-decoration: line-through;
+}
+.E_M {
+  color: #0ff;
+  /* font-size: 32.5px; */
+}
+.FM {
+  color: #f6f;
+  font-size: 50.5px;
+}
+.blink_on {
+  color: #000 !important;
+}
+
+.clock {
+	text-align:right; 
+	width:100px; 
+	float:right;
+}

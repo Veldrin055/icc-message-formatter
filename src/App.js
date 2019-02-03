@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import './new_style.css';
+import parser from './parser/parser';
+import MainPager from './MainPager';
 
 class App extends Component {
+  state = {
+    events: [],
+  };
+
+  componentDidMount() {
+    fetch('monitor.buf')
+      .then(response => {
+        return response.text();
+      })
+      .then(body => {
+        this.setState({ events: parser(body) });
+      });
+  }
+
   render() {
+    const { events } = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="App" >
+        <MainPager {...{ events }}/>
       </div>
     );
   }
