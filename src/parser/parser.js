@@ -100,7 +100,7 @@ function event(line) {
     const eventId = word;
     word = words.shift();
     const notified = '<SPAN' === word;
-    const unit = word ? word.replace('[', '').replace(']', '') : '';
+    const unit = word && !notified ? word.replace('[', '').replace(']', '') : '';
     
     return {
       dateTime,

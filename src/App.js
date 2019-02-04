@@ -40,7 +40,7 @@ class App extends Component {
     return (
       <div className="App" >
         <MainPager {...{ events }}/>
-        <Paging onChange={this.updatePaging} value={value}/>
+        <Paging {...{onChange: this.updatePaging, value}}/>
       </div>
     );
   }

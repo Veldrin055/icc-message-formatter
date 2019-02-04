@@ -9,6 +9,7 @@ const PagerEvent = ({ event }) => {
     brigades = [],
     msg,
     updates = [],
+    notified
   } = event;
   return (
     <div
@@ -31,6 +32,7 @@ const PagerEvent = ({ event }) => {
         {updates.length > 0 ? 
           <FurtherInformation {...{ updates }} />  
         : null}
+        {notified && <span className="F">Notified [CFAFSCC]</span>}
       </div>
     </div>
   );
