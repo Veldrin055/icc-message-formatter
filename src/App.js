@@ -9,25 +9,30 @@ class App extends Component {
     events: [],
     value: 100,
   };
-  
+
   componentDidMount() {
     this.update();
     const intervalId = setInterval(this.update, 3000);
-    this.setState({ intervalId });  
+    this.setState({ intervalId });
   }
-  
+
   componentWillUnmount() {
     clearInterval(this.state.intervalId);
   }
-  
+
   update = () => {
-    fetch('monitor.buf')
+    fetch('http://fs.kynvic.net/pubicc/monitor.buf?')
+    // fetch('monitor.buf')
       .then(response => {
+        if (!response.ok) {
+          throw new Error(response)
+        }
         return response.text();
       })
       .then(body => {
         this.setState({ events: parser(body) });
-      });
+      })
+      .catch(err => console.error(JSON.stringify(err)));
   }
 
   updatePaging = (event) => {
@@ -58,7 +63,7 @@ const Paging = ({onChange, value}) => {
         <option value={150}>150</option>
         <option value={200}>200</option>
         <option value={250}>250</option>
-        <option value={300}>300</option>    
+        <option value={300}>300</option>
       </select>
     </div>
   );
