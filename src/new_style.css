@@ -65,6 +65,7 @@ body {
 }
 
 .clock {
+  margin-right: 1%;
 	text-align:right; 
 	width:100px; 
 	float:right;
