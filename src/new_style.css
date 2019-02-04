@@ -4,6 +4,7 @@
 body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 12px;
+  background-color: #282c34;
 }
 
 .M_Log div {
@@ -67,4 +68,8 @@ body {
 	text-align:right; 
 	width:100px; 
 	float:right;
+}
+
+.paging {
+  margin-left: 1%;
 }

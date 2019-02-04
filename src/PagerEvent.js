@@ -3,7 +3,7 @@ import moment from 'moment';
 
 const PagerEvent = ({ event }) => {
   const {
-    dateTime,
+    startTime,
     eventId,
     responseRequired,
     brigades = [],
@@ -20,7 +20,7 @@ const PagerEvent = ({ event }) => {
     >
       <div id="ev_head">
         <span className="SUF">
-          Start :{dateTime && dateTime.format('HH:mm:ss')} -{' '}
+          Start :{startTime && startTime.format('HH:mm:ss')} -{' '}
           <span style={{ backgroundColor: '#f00' }}>{eventId}</span>-{' '}
           {agency(responseRequired)}
         </span>

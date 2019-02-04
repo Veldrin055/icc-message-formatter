@@ -4,9 +4,13 @@ function parse(file) {
   const events = mergeEvents(lines(file));
   const eventArray = [];
   for (const key in events) {
-    eventArray.unshift(events[key]);
+      eventArray.push(events[key]);
   }
-  return eventArray;
+  return eventArray.sort((a, b) => {
+    if (a.dateTime.isAfter(b.dateTime)) { return -1 }
+    if (a.dateTime.isBefore(b.dateTime)) {return 1 }
+    return 0;
+  });
 }
 
 function lines(file) {
@@ -25,6 +29,7 @@ function mergeEvents(events) {
   events.forEach(e => {
     const { eventId } = e;
     if (!map.hasOwnProperty(eventId)) {
+      e.startTime = e.dateTime;
       map[eventId] = e;
     } else {
       map[eventId] = merge(map[eventId], e);
@@ -51,14 +56,14 @@ function merge(o, n) {
     return { ...o, ...n, brigades };
   } else { // update
     const brigades = o.brigades;
-    const { unit, msg } = n;
+    const { unit, msg, dateTime } = n;
     const i = brigades.findIndex(brig => {
       return brig.code === unit || brig.code === 'C' + unit
     });
     if (i > -1 && (msg.startsWith('STOP') || msg.startsWith('CANCEL'))) {
       brigades[i].cancelled = true;
     }
-    return { ...o, brigades, updates: [...o.updates, n] };
+    return { ...o, dateTime, brigades, updates: [...o.updates, n] };
   }
 }
 
@@ -94,6 +99,7 @@ function event(line) {
     }
     const eventId = word;
     word = words.shift();
+    const notified = '<SPAN' === word;
     const unit = word ? word.replace('[', '').replace(']', '') : '';
     
     return {
@@ -105,6 +111,7 @@ function event(line) {
       eventId,
       updates: [],
       unit,
+      notified,
     };
   } else { // update
     const eventId = words[1];
