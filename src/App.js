@@ -21,18 +21,17 @@ class App extends Component {
   }
 
   update = () => {
-    fetch('http://fs.kynvic.net/pubicc/monitor.buf?')
-    // fetch('monitor.buf')
+    fetch('http://fs.kynvic.net/pubicc/monitor.buf')
       .then(response => {
         if (!response.ok) {
-          throw new Error(response)
+          throw new Error({ status: response.status, msg: response.statusText });
         }
         return response.text();
       })
       .then(body => {
         this.setState({ events: parser(body) });
       })
-      .catch(err => console.error(JSON.stringify(err)));
+      .catch(err => console.error(err));
   }
 
   updatePaging = (event) => {
