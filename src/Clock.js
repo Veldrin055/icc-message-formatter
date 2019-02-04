@@ -23,7 +23,7 @@ class Clock extends Component {
     const { time } = this.state;
     return (
       <div className="clock">
-        <span class="SUF" style={{ fontWeight: 'bold' }}>
+        <span className="SUF" style={{ fontWeight: 'bold' }}>
           {time.format('HH:mm:ss')}
         </span>
       </div>

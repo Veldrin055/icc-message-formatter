@@ -4,7 +4,7 @@ function parse(file) {
   const events = mergeEvents(lines(file));
   const eventArray = [];
   for (const key in events) {
-    eventArray.push(events[key]);
+    eventArray.unshift(events[key]);
   }
   return eventArray;
 }
@@ -35,10 +35,30 @@ function mergeEvents(events) {
 
 function merge(o, n) {
   if (n.eventType === '@@ALERT') {
-    const brigades = [...o.brigades, ...n.brigades];
+    const { brigades } = o;
+    const { unit, dateTime } = n;
+    const i = brigades.findIndex(brig => {
+      return brig.unit === unit || brig.unit === 'C' + unit
+    });
+    if (i > -1) {
+      brigades[i].dateTime = dateTime;
+    }
+    n.brigades.forEach(brig => {
+      if (!brigades.find(b => b.code === brig.code)) {
+        brigades.push(brig);
+      }
+    });
     return { ...o, ...n, brigades };
-  } else {
-    return { ...o, updates: [...o.updates, n] };
+  } else { // update
+    const brigades = o.brigades;
+    const { unit, msg } = n;
+    const i = brigades.findIndex(brig => {
+      return brig.code === unit || brig.code === 'C' + unit
+    });
+    if (i > -1 && (msg.startsWith('STOP') || msg.startsWith('CANCEL'))) {
+      brigades[i].cancelled = true;
+    }
+    return { ...o, brigades, updates: [...o.updates, n] };
   }
 }
 
@@ -55,15 +75,27 @@ function event(line) {
       word = words.shift();
     }
     const msg = buf.join(' ');
-    const responseRequired = words.shift(); // check contains only proper chars
-    let brigades = [];
     word = words.shift();
+    let responseRequired;
+    if (/^[AFPRS]+$/.test(word)) { // check response agency is valid
+      responseRequired = word;
+      word = words.shift();
+    } else {
+      responseRequired = '';
+    }
+    let brigades = [];
     while (word && !/F\d+/.test(word)) {
-      brigades.push(word);
+      brigades.push({
+        code: word,
+        dateTime,
+        cancelled: false,
+      });
       word = words.shift();
     }
     const eventId = word;
-
+    word = words.shift();
+    const unit = word ? word.replace('[', '').replace(']', '') : '';
+    
     return {
       dateTime,
       eventType,
@@ -72,16 +104,18 @@ function event(line) {
       brigades,
       eventId,
       updates: [],
+      unit,
     };
-  } else {
-    // update
+  } else { // update
     const eventId = words[1];
     const msg = words.slice(3, words.length - 1).join(' ');
+    const unit = words[words.length - 1].replace('[', '').replace(']', '');
     return {
       eventId,
       msg,
       dateTime,
       eventType,
+      unit,
     };
   }
 }

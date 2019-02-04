@@ -6,8 +6,9 @@ const MainPager = ({ events }) => (
   <div className="main_Pager">
     <TimeHeader />
     <Clock />
+    <Clear />
     {events.map(e => (
-      <PagerEvent key={e.eventId} event={e} />
+      <PagerEvent key={e.dateTime.valueOf()} event={e} />
     ))}
   </div>
 );
@@ -21,7 +22,6 @@ const TimeHeader = () => (
       fontWeight: 'bold',
     }}
   >
-    {}
     <span
       style={{
         background: '#0C0',
@@ -57,5 +57,7 @@ const TimeHeader = () => (
     </span>
   </div>
 );
+
+const Clear = () => (<div style={{clear: 'both'}}></div>);
 
 export default MainPager;
