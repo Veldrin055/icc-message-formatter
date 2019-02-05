@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
+const timezone = 'Australia/Melbourne';
+
 class Clock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: moment(),
+      time: moment().tz(timezone),
     };
   }
   componentDidMount() {
@@ -16,7 +18,7 @@ class Clock extends Component {
   }
   tick() {
     this.setState({
-      time: moment(),
+      time: moment().tz(timezone),
     });
   }
   render() {

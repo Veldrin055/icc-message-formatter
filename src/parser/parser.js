@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 function parse(file) {
   const events = mergeEvents(lines(file));
@@ -29,7 +29,7 @@ function mergeEvents(events) {
   events.forEach(e => {
     const { eventId } = e;
     if (!map.hasOwnProperty(eventId)) {
-      e.startTime = e.dateTime;
+      e.startTime = e.dateTime.clone();
       map[eventId] = e;
     } else {
       map[eventId] = merge(map[eventId], e);
@@ -69,7 +69,8 @@ function merge(o, n) {
 
 function event(line) {
   let words = line.split(' ');
-  const dateTime = moment(words[1] + ' ' + words[2], 'HH:mm:ss DD-MM-YY');
+  const dateTime = moment(words[1] + ' ' + words[2], 'HH:mm:ss DD-MM-YY')
+    .tz('Australia/Melbourne');
   const eventType = words[6];
   words = words.slice(7);
   if (eventType === '@@ALERT') {

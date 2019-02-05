@@ -57,7 +57,7 @@ const agency = responseRequired => {
 
 const Unit = ({ code, dateTime, cancelled }) => {
   const classes = [];
-  const now = moment();
+  const now = moment().tz('Australia/Melbourne');
   if (cancelled) {
     classes.push('UNIT_CANCEL');
   }
