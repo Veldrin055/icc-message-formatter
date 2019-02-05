@@ -5,6 +5,7 @@ import parser from './parser/parser';
 import MainPager from './MainPager';
 
 class App extends Component {
+  
   state = {
     events: [],
     value: 100,
@@ -12,15 +13,15 @@ class App extends Component {
 
   componentDidMount() {
     this.update();
-    const intervalId = setInterval(this.update, 3000);
-    this.setState({ intervalId });
+    this.intervalId = setInterval(this.update, 3000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.intervalId);
+    clearInterval(this.intervalId);
   }
 
   update = () => {
+    this.setState({ error: false, updating: true });
     fetch('http://fs.kynvic.net/pubicc/monitor.buf')
       .then(response => {
         if (!response.ok) {
@@ -29,9 +30,12 @@ class App extends Component {
         return response.text();
       })
       .then(body => {
-        this.setState({ events: parser(body) });
+        this.setState({ events: parser(body), updating: false, error: false });
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err)
+        this.setState({ error: true, updating: false })
+      });
   }
 
   updatePaging = (event) => {
@@ -39,11 +43,11 @@ class App extends Component {
   }
 
   render() {
-    const { value } = this.state;
+    const { value, error, updating } = this.state;
     const events = this.state.events.slice(0, value);
     return (
       <div className="App" >
-        <MainPager {...{ events }}/>
+        <MainPager {...{ events, error, updating }}/>
         <Paging {...{onChange: this.updatePaging, value}}/>
       </div>
     );

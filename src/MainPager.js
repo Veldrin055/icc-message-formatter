@@ -2,9 +2,9 @@ import React from 'react';
 import PagerEvent from './PagerEvent';
 import Clock from './Clock';
 
-const MainPager = ({ events }) => (
+const MainPager = ({ events, error, updating }) => (
   <div className="main_Pager">
-    <TimeHeader />
+    <TimeHeader {...{ error, updating }}/>
     <Clock />
     <Clear />
     {events.map(e => (
@@ -13,7 +13,7 @@ const MainPager = ({ events }) => (
   </div>
 );
 
-const TimeHeader = () => (
+const TimeHeader = ({ error, updating }) => (
   <div
     style={{
       textAlign: 'left',
@@ -55,6 +55,8 @@ const TimeHeader = () => (
     >
       &gt; 15:00min
     </span>
+    {error && <span style={{ fontSize: '24px', color: 'red' }} role='img' ariaLabel='Error'>❌ Problem updating file</span>}
+    {updating && <span className='App-logo' style={{ fontSize: '24px'}} rol='img' ariaLabel='Updating'>🌀</span>}
   </div>
 );
 
