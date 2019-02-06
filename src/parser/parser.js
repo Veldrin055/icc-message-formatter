@@ -29,7 +29,7 @@ function mergeEvents(events) {
   events.forEach(e => {
     const { eventId } = e;
     if (!map.hasOwnProperty(eventId)) {
-      e.startTime = e.dateTime.clone();
+      e.startTime = e.dateTime.format('HH:mm:ss');
       map[eventId] = e;
     } else {
       map[eventId] = merge(map[eventId], e);

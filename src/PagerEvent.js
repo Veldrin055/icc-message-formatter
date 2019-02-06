@@ -21,7 +21,7 @@ const PagerEvent = ({ event }) => {
     >
       <div id="ev_head">
         <span className="SUF">
-          Start :{startTime && startTime.format('HH:mm:ss')} -{' '}
+          Start :{startTime ? startTime : 'Unknown'} -{' '}
           <span style={{ backgroundColor: '#f00' }}>{eventId}</span>-{' '}
           {agency(responseRequired)}
         </span>

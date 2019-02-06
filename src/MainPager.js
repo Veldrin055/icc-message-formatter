@@ -5,7 +5,7 @@ import Clock from './Clock';
 const MainPager = ({ events, error, updating }) => (
   <div className="main_Pager">
     <TimeHeader {...{ error, updating }}/>
-    <Clock />
+    <Clock updating={updating}/>
     <Clear />
     {events.map(e => (
       <PagerEvent key={e.dateTime.valueOf()} event={e} />
@@ -55,8 +55,7 @@ const TimeHeader = ({ error, updating }) => (
     >
       &gt; 15:00min
     </span>
-    {error && <span style={{ fontSize: '24px', color: 'red' }} role='img' ariaLabel='Error'>❌ Problem updating file</span>}
-    {updating && <span className='App-logo' style={{ fontSize: '24px'}} rol='img' ariaLabel='Updating'>🌀</span>}
+    {error && <span style={{ fontSize: '24px', color: 'red' }}><span role='img' ariaLabel='Error'>❌</span> Problem updating file</span>}
   </div>
 );
 
