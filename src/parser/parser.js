@@ -27,11 +27,11 @@ function lines(file) {
 function mergeEvents(events) {
   const map = {};
   events.forEach(e => {
-    const { eventId } = e;
-    if (!map.hasOwnProperty(eventId)) {
+    const { eventId, eventType } = e;
+    if (!map.hasOwnProperty(eventId) && eventType === '@@ALERT') {
       e.startTime = e.dateTime.format('HH:mm:ss');
       map[eventId] = e;
-    } else {
+    } else if (map.hasOwnProperty(eventId)){
       map[eventId] = merge(map[eventId], e);
     }
   });
@@ -57,12 +57,13 @@ function merge(o, n) {
   } else { // update
     const brigades = o.brigades;
     const { unit, msg, dateTime } = n;
-    const i = brigades.findIndex(brig => {
-      return brig.code === unit || brig.code === 'C' + unit
-    });
-    if (i > -1 && (msg.startsWith('STOP') || msg.startsWith('CANCEL'))) {
-      brigades[i].cancelled = true;
-    }
+    if (brigades) {
+      const i = brigades.findIndex(brig => {
+        return brig.code === unit || brig.code === 'C' + unit
+      });
+      if (i > -1 && (msg.startsWith('STOP') || msg.startsWith('CANCEL'))) {
+        brigades[i].cancelled = true;
+    }}
     return { ...o, dateTime, brigades, updates: [...o.updates, n] };
   }
 }
