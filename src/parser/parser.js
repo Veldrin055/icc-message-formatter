@@ -81,6 +81,7 @@ function event(line) {
       buf.push(word);
       word = words.shift();
     }
+    buf.push(word);
     const msg = buf.join(' ');
     word = words.shift();
     let responseRequired;

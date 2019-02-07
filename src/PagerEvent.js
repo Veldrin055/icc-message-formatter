@@ -27,7 +27,7 @@ const PagerEvent = ({ event }) => {
         </span>
       </div>
       <div id="ev_body">
-        <span className="E_M">{msg + ' '}</span>
+        <span className="E_M">ALERT {msg + ' '}</span>
         {brigades.map(b => <Unit key={b.code} {...{...b}}/>)}
         {updates.length > 0 ? 
           <FurtherInformation {...{ updates }} />  

@@ -5,7 +5,7 @@ import Clock from './Clock';
 const MainPager = ({ events, error, updating }) => (
   <div className="main_Pager">
     <TimeHeader {...{ error, updating }}/>
-    <Clock updating={updating}/>
+    <Clock {...{updating}}/>
     <Clear />
     {events.map(e => (
       <PagerEvent key={e.dateTime.valueOf()} event={e} />
@@ -13,7 +13,7 @@ const MainPager = ({ events, error, updating }) => (
   </div>
 );
 
-const TimeHeader = ({ error, updating }) => (
+const TimeHeader = ({ error }) => (
   <div
     style={{
       textAlign: 'left',
