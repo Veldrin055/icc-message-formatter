@@ -9,9 +9,9 @@ const PagerEvent = ({ event, stripe }) => {
     brigades = [],
     msg,
     updates = [],
-    notified
+    notified,
   } = event;
-  let classes = "M_Log";
+  let classes = 'M_Log';
   if (stripe) {
     classes += ' light';
   }
@@ -32,10 +32,10 @@ const PagerEvent = ({ event, stripe }) => {
       </div>
       <div id="ev_body">
         <span className="E_M">{msg + ' '}</span>
-        {brigades.map(b => <Unit key={b.code} {...{...b}}/>)}
-        {updates.length > 0 ? 
-          <FurtherInformation {...{ updates }} />  
-        : null}
+        {brigades.map(b => (
+          <Unit key={b.code} {...{ ...b }} />
+        ))}
+        {updates.length > 0 ? <FurtherInformation {...{ updates }} /> : null}
         {notified && <span className="F">Notified [CFAFSCC]</span>}
       </div>
     </div>
@@ -44,11 +44,11 @@ const PagerEvent = ({ event, stripe }) => {
 
 const agency = responseRequired => {
   const agencies = {
-    A: 'AV 🚑',
-    F: 'FIRE 🚒',
-    P: 'POL 🚓',
-    R: 'RESC ⛑️',
-    S: 'SES ⚒️',
+    A: 'AV',
+    F: 'FIRE',
+    P: 'POL',
+    R: 'RESC',
+    S: 'SES',
   };
   return (
     responseRequired &&
@@ -65,25 +65,29 @@ const Unit = ({ code, dateTime, cancelled }) => {
   if (cancelled) {
     classes.push('UNIT_CANCEL');
   }
-  if(now.subtract(5, 'minutes').isBefore(dateTime)) {
+  if (now.subtract(5, 'minutes').isBefore(dateTime)) {
     classes.push('UNIT_0');
   } else if (now.subtract(15, 'minutes').isBefore(dateTime)) {
     classes.push('UNIT_5');
   } else {
     classes.push('UNIT_15');
   }
-  return (<span className={classes.join(' ')}>{code} </span>)
-}
+  return <span className={classes.join(' ')}>{code} </span>;
+};
 
 const FurtherInformation = ({ updates }) => {
   const update = updates.sort((a, b) => {
-    if (a.dateTime.isBefore(b.dateTime)) { return -1}
-    else if (a.dateTime.isAfter(b.dateTime)) { return 1}
-    else return 0;
+    if (a.dateTime.isBefore(b.dateTime)) {
+      return -1;
+    } else if (a.dateTime.isAfter(b.dateTime)) {
+      return 1;
+    } else return 0;
   })[0];
-  return(
+  return (
     <React.Fragment>
-      <br /><span className="F_B">Further {update.dateTime.format('HH:mm:ss')}</span><span className="E_M"> - {update.msg} </span>
+      <br />
+      <span className="F_B">Further {update.dateTime.format('HH:mm:ss')}</span>
+      <span className="E_M"> - {update.msg} </span>
     </React.Fragment>
   );
 };
