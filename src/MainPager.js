@@ -8,7 +8,7 @@ const MainPager = ({ events, error, updating }) => (
     <Clock {...{updating}}/>
     <Clear />
     {events.map((e, i) => (
-      <PagerEvent key={e.dateTime.valueOf()} event={e} stripe={i % 2 == 0}/>
+      <PagerEvent key={e.dateTime.valueOf()} event={e} stripe={i % 2 === 0}/>
     ))}
   </div>
 );

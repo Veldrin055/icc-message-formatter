@@ -3,13 +3,23 @@ import './App.css';
 import './new_style.css';
 import parser from './parser/parser';
 import MainPager from './MainPager';
+import soundfile from  './horse.ogg';
 
 class App extends Component {
-  
-  state = {
-    events: [],
-    value: 100,
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      events: [],
+      value: 100,
+      updating: false,
+      error: false,
+      isNew: false,
+    };
+    this.audio = new Audio(soundfile);
+
+  }
+
 
   componentDidMount() {
     this.update();
@@ -21,6 +31,7 @@ class App extends Component {
   }
 
   update = () => {
+    const { events } = this.state;
     this.setState({ error: false, updating: true });
     fetch('monitor.buf')
     // fetch('http://fs.kynvic.net/pubicc/monitor.buf')
@@ -31,7 +42,13 @@ class App extends Component {
         return response.text();
       })
       .then(body => {
-        this.setState({ events: parser(body), updating: false, error: false });
+        const update = parser(body);
+        const isNew = update && events && JSON.stringify(update[0]) !== JSON.stringify(events[0]);
+        if (isNew) {
+          console.log('ding');
+          this.audio.play();
+        }
+        this.setState({ events: update, updating: false, error: false });
       })
       .catch(err => {
         console.error(err)
@@ -44,7 +61,7 @@ class App extends Component {
   }
 
   render() {
-    const { value, error, updating } = this.state;
+    const { value, error, updating, } = this.state;
     const events = this.state.events.slice(0, value);
     return (
       <div className="App" >
