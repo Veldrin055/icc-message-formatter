@@ -3,7 +3,7 @@ import './App.css';
 import './new_style.css';
 import parser from './parser/parser';
 import MainPager from './MainPager';
-import soundfile from './horse.ogg';
+import soundfile from './click.mp4';
 
 class App extends Component {
   constructor(props) {
