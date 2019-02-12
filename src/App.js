@@ -3,10 +3,9 @@ import './App.css';
 import './new_style.css';
 import parser from './parser/parser';
 import MainPager from './MainPager';
-import soundfile from  './horse.ogg';
+import soundfile from './horse.ogg';
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -17,9 +16,7 @@ class App extends Component {
       isNew: false,
     };
     this.audio = new Audio(soundfile);
-
   }
-
 
   componentDidMount() {
     this.update();
@@ -37,45 +34,48 @@ class App extends Component {
     fetch('http://fs.kynvic.net/pubicc/monitor.buf')
       .then(response => {
         if (!response.ok) {
-          throw new Error({ status: response.status, msg: response.statusText });
+          throw new Error({
+            status: response.status,
+            msg: response.statusText,
+          });
         }
         return response.text();
       })
       .then(body => {
         const update = parser(body);
-        const isNew = update && events && JSON.stringify(update[0]) !== JSON.stringify(events[0]);
+        const isNew =
+          update && update.length && events && events.length && update[0].eventId !== events[0].eventId;
         if (isNew) {
-          console.log('ding');
           this.audio.play();
         }
         this.setState({ events: update, updating: false, error: false });
       })
       .catch(err => {
-        console.error(err)
-        this.setState({ error: true, updating: false })
+        console.error(err);
+        this.setState({ error: true, updating: false });
       });
-  }
+  };
 
-  updatePaging = (event) => {
+  updatePaging = event => {
     this.setState({ value: event.target.value });
-  }
+  };
 
   render() {
-    const { value, error, updating, } = this.state;
+    const { value, error, updating } = this.state;
     const events = this.state.events.slice(0, value);
     return (
-      <div className="App" >
-        <MainPager {...{ events, error, updating }}/>
-        <Paging {...{onChange: this.updatePaging, value}}/>
+      <div className="App">
+        <MainPager {...{ events, error, updating }} />
+        <Paging {...{ onChange: this.updatePaging, value }} />
       </div>
     );
   }
 }
 
-const Paging = ({onChange, value}) => {
+const Paging = ({ onChange, value }) => {
   return (
     <div className="paging">
-	    <b>PAGING: </b>
+      <b>PAGING: </b>
       <select name="recstoshow" onChange={onChange} defaultValue={value}>
         <option value={25}>25</option>
         <option value={50}>50</option>
@@ -88,6 +88,6 @@ const Paging = ({onChange, value}) => {
       </select>
     </div>
   );
-}
+};
 
 export default App;

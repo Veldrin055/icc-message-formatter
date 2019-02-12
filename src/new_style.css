@@ -9,6 +9,7 @@ body {
 
 .M_Log {
   padding-bottom: 2px;
+  padding-top: 2px;
   padding-left: 5px;
   font-size: 12px;
 }
@@ -67,21 +68,21 @@ body {
 .clock {
   margin-right: 1%;
   margin-top: 1%;
-	text-align:right; 
-	width:100px; 
-  float:right;
-  transition: -transform .2s ease-out;
-  -webkit-transition:  -webkit-transform .2s ease-out;
-  -moz-transition: -moz-transform .2s ease-out;
-  -o-transition: -o-transform .2s ease-out;
-  -ms-transition: -ms-transform .2s ease-out; 
+  text-align: right;
+  width: 100px;
+  float: right;
+  transition: -transform 0.2s ease-out;
+  -webkit-transition: -webkit-transform 0.2s ease-out;
+  -moz-transition: -moz-transform 0.2s ease-out;
+  -o-transition: -o-transform 0.2s ease-out;
+  -ms-transition: -ms-transform 0.2s ease-out;
 }
 
 .update {
-  -webkit-transform:scale(1.5);
-  -moz-transform:scale(1.5);
-  -o-transform:scale(1.5);
-  transform:scale(1.5);
+  -webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  transform: scale(1.5);
 }
 
 .paging {
