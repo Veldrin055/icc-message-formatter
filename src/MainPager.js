@@ -4,11 +4,11 @@ import Clock from './Clock';
 
 const MainPager = ({ events, error, updating }) => (
   <div className="main_Pager">
-    <TimeHeader {...{ error, updating }}/>
+    <TimeHeader {...{ error }}/>
     <Clock {...{updating}}/>
     <Clear />
-    {events.map(e => (
-      <PagerEvent key={e.dateTime.valueOf()} event={e} />
+    {events.map((e, i) => (
+      <PagerEvent key={e.dateTime.valueOf()} event={e} stripe={i % 2 == 0}/>
     ))}
   </div>
 );

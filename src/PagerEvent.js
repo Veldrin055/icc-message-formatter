@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-const PagerEvent = ({ event }) => {
+const PagerEvent = ({ event, stripe }) => {
   const {
     startTime,
     eventId,
@@ -11,10 +11,14 @@ const PagerEvent = ({ event }) => {
     updates = [],
     notified
   } = event;
+  let classes = "M_Log";
+  if (stripe) {
+    classes += ' light';
+  }
   return (
     <div
       id="ev_"
-      className="M_Log"
+      className={classes}
       style={{
         fontWeight: 'bold',
       }}
@@ -27,7 +31,7 @@ const PagerEvent = ({ event }) => {
         </span>
       </div>
       <div id="ev_body">
-        <span className="E_M">ALERT {msg + ' '}</span>
+        <span className="E_M">{msg + ' '}</span>
         {brigades.map(b => <Unit key={b.code} {...{...b}}/>)}
         {updates.length > 0 ? 
           <FurtherInformation {...{ updates }} />  

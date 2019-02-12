@@ -7,20 +7,19 @@ body {
   background-color: #282c34;
 }
 
-.M_Log div {
-  padding: 5px;
+.M_Log {
   padding-bottom: 2px;
-  margin-top: 5px;
   font-size: 12px;
 }
 
-#ev_body {
+.ev_body {
   margin-top: -10px;
 }
 
 .SUF {
-  color: #F;
+  color: #ffffff;
 }
+
 .F_B {
   color: #ffb400;
 }
@@ -34,7 +33,7 @@ body {
   color: #0c0;
 }
 .APPL {
-  color: #FE;
+  color: #fefefe;
 }
 .UNIT_0 {
   color: #0c0;
@@ -86,4 +85,8 @@ body {
 
 .paging {
   margin-left: 1%;
+}
+
+.light {
+  background-color: #4c4f54;
 }

@@ -22,7 +22,8 @@ class App extends Component {
 
   update = () => {
     this.setState({ error: false, updating: true });
-    fetch('http://fs.kynvic.net/pubicc/monitor.buf')
+    fetch('monitor.buf')
+    // fetch('http://fs.kynvic.net/pubicc/monitor.buf')
       .then(response => {
         if (!response.ok) {
           throw new Error({ status: response.status, msg: response.statusText });
