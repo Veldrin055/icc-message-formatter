@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
-import './new_style.css';
+import './assets/App.css';
+import './assets/new_style.css';
+import alerts from './assets/alerts.json'
+import soundfile from './assets/click.mp4';
+import warning from './assets/WarningTone.wav';
 import parser from './parser/parser';
 import MainPager from './MainPager';
-import soundfile from './click.mp4';
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ class App extends Component {
       isNew: false,
     };
     this.audio = new Audio(soundfile);
+    this.warning = new Audio(warning);
   }
 
   componentDidMount() {
@@ -43,10 +46,15 @@ class App extends Component {
       })
       .then(body => {
         const update = parser(body);
-        const isNew =
-          update && update.length && events && events.length && update[0].eventId !== events[0].eventId;
+        const isNew = update && update.length && events && events.length
+         && update[0].eventId !== events[0].eventId;
         if (isNew) {
-          this.audio.play();
+          if (update[0].brigades
+           && update[0].brigades.some(r => alerts.includes(r.code))) {
+            this.warning.play();
+          } else {
+            this.audio.play();
+          }
         }
         this.setState({ events: update, updating: false, error: false });
       })

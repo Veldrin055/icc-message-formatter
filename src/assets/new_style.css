@@ -92,3 +92,18 @@ body {
 .light {
   background-color: #4c4f54;
 }
+
+@keyframes alert-pulse {
+  /* from {background-color: red;} */
+  to {
+    background-color: yellow;
+  }
+}
+
+.alert {
+  animation-name: alert-pulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}

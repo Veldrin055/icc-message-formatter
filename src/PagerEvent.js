@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import alerts from './assets/alerts.json';
 
 const PagerEvent = ({ event, stripe }) => {
   const {
@@ -11,14 +12,17 @@ const PagerEvent = ({ event, stripe }) => {
     updates = [],
     notified,
   } = event;
-  let classes = 'M_Log';
-  if (stripe) {
-    classes += ' light';
+  let classes = ['M_Log'];
+  if (brigades.some(r => alerts.includes(r.code))) {
+    classes.push('alert')
+  }
+  else if (stripe) {
+    classes.push('light');
   }
   return (
     <div
       id="ev_"
-      className={classes}
+      className={classes.join(' ')}
       style={{
         fontWeight: 'bold',
       }}
