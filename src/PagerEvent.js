@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import alerts from './assets/alerts.json';
+import { isSpecialAlert } from './utils'
 
 const PagerEvent = ({ event, stripe }) => {
   const {
@@ -13,7 +13,7 @@ const PagerEvent = ({ event, stripe }) => {
     notified,
   } = event;
   let classes = ['M_Log'];
-  if (brigades.some(r => alerts.includes(r.code))) {
+  if (isSpecialAlert(brigades)) {
     classes.push('alert')
   }
   else if (stripe) {
