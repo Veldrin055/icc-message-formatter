@@ -4,7 +4,7 @@
 body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 12px;
-  background-color: #282c34;
+  background-color: black;
 }
 
 .M_Log {
@@ -90,11 +90,10 @@ body {
 }
 
 .light {
-  background-color: #4c4f54;
+  background-color: #282c34;
 }
 
 @keyframes alert-pulse {
-  /* from {background-color: red;} */
   to {
     background-color: yellow;
   }
