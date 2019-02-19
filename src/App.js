@@ -35,7 +35,7 @@ class App extends Component {
     const { events } = this.state;
     this.setState({ error: false, updating: true });
     // fetch('monitor.buf')
-    fetch('http://fs.kynvic.net/pubicc/monitor.buf')
+    fetch('http://fs.kynvic.net/pubicc/monitor.buf', { cache: 'no-store' })
       .then(response => {
         if (!response.ok) {
           throw new Error({
