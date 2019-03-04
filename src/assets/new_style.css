@@ -95,7 +95,7 @@ body {
 
 @keyframes alert-pulse {
   to {
-    background-color: yellow;
+    background-color: rgb(255, 255, 0, 0.8);
   }
 }
 
