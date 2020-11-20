@@ -18,7 +18,11 @@ function lines(file) {
   file.split('\n').forEach(line => {
     line = line.trim();
     if (line && line !== '[HTML BUFFER]') {
-      l.unshift(event(line));
+      try {
+        l.unshift(event(line));
+      } catch (err) {
+        // swallow it
+      }
     }
   });
   return l;
@@ -70,6 +74,9 @@ function merge(o, n) {
 
 function event(line) {
   let words = line.split(' ');
+  if (words === undefined) {
+    return null
+  }
   const dateTime = moment(words[1] + ' ' + words[2], 'HH:mm:ss DD-MM-YY')
     .tz('Australia/Melbourne');
   const eventType = words[6];
