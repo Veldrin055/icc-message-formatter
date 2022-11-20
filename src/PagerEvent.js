@@ -29,7 +29,7 @@ const PagerEvent = ({ event, stripe }) => {
     >
       <div id="ev_head">
         <span className="SUF">
-          Start :{startTime ? startTime : 'Unknown'} -{' '}
+          Start: {startTime ? startTime : 'Unknown'} -{' '}
           <span style={{ backgroundColor: '#f00' }}>{eventId}</span>-{' '}
           {agency(responseRequired)}
         </span>
