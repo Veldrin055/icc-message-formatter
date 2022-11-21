@@ -76,7 +76,7 @@ const Unit = ({ code, dateTime, cancelled }) => {
   } else {
     classes.push('UNIT_15');
   }
-  return <span className={classes.join(' ')}>{code} </span>;
+  return <span><span className={classes.join(' ')}>{code}</span> </span>;
 };
 
 const FurtherInformation = ({ updates }) => {
