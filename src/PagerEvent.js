@@ -37,7 +37,7 @@ const PagerEvent = ({ event, stripe }) => {
       <div id="ev_body">
         <span className="E_M">{msg + ' '}</span>
         {brigades.map(b => (
-          <Unit key={b.code} {...{ ...b }} />
+          <span><Unit key={b.code} {...{ ...b }} /> </span>
         ))}
         {updates.length > 0 ? <FurtherInformation {...{ updates }} /> : null}
         {notified && <span className="F">Notified [CFAFSCC]</span>}
@@ -76,7 +76,7 @@ const Unit = ({ code, dateTime, cancelled }) => {
   } else {
     classes.push('UNIT_15');
   }
-  return <span className={classes.join(' ')}>{code} </span>;
+  return <span className={classes.join(' ')}>{code}</span>;
 };
 
 const FurtherInformation = ({ updates }) => {
